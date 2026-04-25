@@ -9,10 +9,18 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
     if (reduce) return;
 
     const lenis = new Lenis({
-      lerp: 0.1,
+      lerp: 0.08,
+      duration: 1.15,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       wheelMultiplier: 1,
       smoothWheel: true,
+      syncTouch: false,
     });
+
+    const onScroll = () => {
+      window.dispatchEvent(new Event("scroll"));
+    };
+    lenis.on("scroll", onScroll);
 
     let raf = 0;
     const tick = (t: number) => {

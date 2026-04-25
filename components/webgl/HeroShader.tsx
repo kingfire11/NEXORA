@@ -90,7 +90,7 @@ export default function HeroShader() {
     const el = ref.current;
 
     const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference: "high-performance" });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.6));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25));
     const w = el.clientWidth;
     const h = el.clientHeight;
     renderer.setSize(w, h, false);
@@ -136,15 +136,26 @@ export default function HeroShader() {
     window.addEventListener("resize", onResize);
 
     let raf = 0;
+    let visible = true;
     const start = performance.now();
     const tick = () => {
-      const now = performance.now();
-      uniforms.uTime.value = (now - start) / 1000;
-      uniforms.uMouse.value.x += (targetMouse.x - uniforms.uMouse.value.x) * 0.05;
-      uniforms.uMouse.value.y += (targetMouse.y - uniforms.uMouse.value.y) * 0.05;
-      renderer.render(scene, camera);
+      if (visible) {
+        const now = performance.now();
+        uniforms.uTime.value = (now - start) / 1000;
+        uniforms.uMouse.value.x += (targetMouse.x - uniforms.uMouse.value.x) * 0.05;
+        uniforms.uMouse.value.y += (targetMouse.y - uniforms.uMouse.value.y) * 0.05;
+        renderer.render(scene, camera);
+      }
       if (!reduce) raf = requestAnimationFrame(tick);
     };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) visible = e.isIntersecting;
+      },
+      { threshold: 0 },
+    );
+    io.observe(el);
     if (reduce) {
       uniforms.uIntensity.value = 0.0;
       renderer.render(scene, camera);
@@ -154,6 +165,7 @@ export default function HeroShader() {
 
     return () => {
       cancelAnimationFrame(raf);
+      io.disconnect();
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("resize", onResize);
       geo.dispose();

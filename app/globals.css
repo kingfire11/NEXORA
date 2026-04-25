@@ -90,13 +90,11 @@ a, button, input, [role="button"] { cursor: none; }
   inset: 0;
   pointer-events: none;
   z-index: 60;
-  opacity: var(--noise-opacity);
-  mix-blend-mode: overlay;
+  opacity: 0.025;
   background-image:
-    radial-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
-    radial-gradient(rgba(255,255,255,0.3) 1px, transparent 1px);
-  background-size: 3px 3px, 7px 7px;
-  background-position: 0 0, 1px 1px;
+    radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px);
+  background-size: 3px 3px;
+  will-change: auto;
 }
 
 .gradient-border { position: relative; isolation: isolate; }
