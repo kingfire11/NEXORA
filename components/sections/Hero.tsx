@@ -5,6 +5,8 @@ import Link from "next/link";
 import Magnetic from "@/components/motion/Magnetic";
 import SplitReveal from "@/components/motion/SplitReveal";
 import { motion } from "framer-motion";
+import { useT } from "@/lib/i18n";
+import { translations } from "@/lib/translations";
 
 const HeroShader = dynamic(() => import("@/components/webgl/HeroShader"), {
   ssr: false,
@@ -21,6 +23,7 @@ const HeroShader = dynamic(() => import("@/components/webgl/HeroShader"), {
 });
 
 export default function Hero() {
+  const t = useT(translations).hero;
   return (
     <section className="relative isolate min-h-[100svh] overflow-hidden">
       <div className="absolute inset-0 -z-10">
@@ -38,12 +41,12 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
           className="font-mono-label mb-6"
         >
-          ( 01 — AUTOMATION STUDIO )
+          {t.eyebrow}
         </motion.div>
 
         <SplitReveal
           as="h1"
-          text="We automate the work that scales your business."
+          text={t.title}
           className="font-display max-w-[18ch] text-[clamp(48px,9vw,160px)]"
         />
 
@@ -55,7 +58,7 @@ export default function Hero() {
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
             className="max-w-[60ch] text-[clamp(16px,1.2vw,19px)] leading-[1.55] text-[var(--fg-secondary)]"
           >
-            NEXORA builds AI agents, sales workflows, and support bots that replace your most repetitive hours — so your team ships the work only humans can.
+            {t.sub}
           </motion.p>
 
           <motion.div
@@ -67,13 +70,13 @@ export default function Hero() {
           >
             <Magnetic>
               <Link href="#cta" data-cursor="START" className="btn-primary">
-                Start automating
+                {t.ctaPrimary}
                 <span aria-hidden>→</span>
               </Link>
             </Magnetic>
             <Magnetic strength={0.25}>
               <Link href="#work" data-cursor="VIEW" className="btn-ghost">
-                See our work
+                {t.ctaSecondary}
               </Link>
             </Magnetic>
           </motion.div>
@@ -86,16 +89,17 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.85 }}
           className="font-mono-label mt-12 flex flex-wrap items-center gap-x-8 gap-y-2"
         >
-          <span>Trusted by 50+ teams</span>
-          <span aria-hidden className="opacity-30">·</span>
-          <span>12 000+ hours saved annually</span>
-          <span aria-hidden className="opacity-30">·</span>
-          <span>87% faster support</span>
+          {t.proof.map((p, i) => (
+            <span key={i} className="flex items-center gap-x-8">
+              {i > 0 && <span aria-hidden className="opacity-30">·</span>}
+              <span>{p}</span>
+            </span>
+          ))}
         </motion.div>
 
         <div className="pointer-events-none absolute bottom-8 right-[clamp(20px,5vw,80px)] hidden flex-col items-center gap-3 md:flex">
           <span className="font-mono-label" style={{ writingMode: "vertical-rl" }}>
-            SCROLL
+            {t.scroll}
           </span>
           <span className="scroll-indicator-line h-10 w-px" />
         </div>

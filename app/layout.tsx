@@ -5,6 +5,7 @@ import LenisProvider from "@/components/layout/LenisProvider";
 import Cursor from "@/components/layout/Cursor";
 import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
+import { LangProvider } from "@/lib/i18n";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -56,13 +57,15 @@ export default function RootLayout({
       className={`${inter.variable} ${jbMono.variable} ${display.variable}`}
     >
       <body>
-        <LenisProvider>
-          <Cursor />
-          <Nav />
-          <main>{children}</main>
-          <Footer />
-          <div className="noise-overlay" aria-hidden />
-        </LenisProvider>
+        <LangProvider>
+          <LenisProvider>
+            <Cursor />
+            <Nav />
+            <main>{children}</main>
+            <Footer />
+            <div className="noise-overlay" aria-hidden />
+          </LenisProvider>
+        </LangProvider>
       </body>
     </html>
   );

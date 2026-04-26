@@ -2,6 +2,10 @@
 
 import { motion } from "framer-motion";
 import SplitReveal from "@/components/motion/SplitReveal";
+import { useT } from "@/lib/i18n";
+import { translations } from "@/lib/translations";
+
+const ILLUS = [<PipelineIllu key="0" />, <ChatIllu key="1" />, <NodesIllu key="2" />, <OrbIllu key="3" />];
 
 interface Service {
   num: string;
@@ -11,55 +15,26 @@ interface Service {
   illustration: React.ReactNode;
 }
 
-const SERVICES: Service[] = [
-  {
-    num: "01",
-    title: "Sales Automation",
-    desc: "Lead scoring, AI-SDR sequences, and CRM choreography that turns inbound chaos into a predictable pipeline.",
-    chips: ["Bitrix24", "amoCRM", "HubSpot", "Apollo"],
-    illustration: <PipelineIllu />,
-  },
-  {
-    num: "02",
-    title: "Support Bots",
-    desc: "RAG-powered agents on WhatsApp, Telegram, and your site — answering 80% of tickets before a human reads them.",
-    chips: ["WhatsApp API", "Telegram", "Claude", "RAG"],
-    illustration: <ChatIllu />,
-  },
-  {
-    num: "03",
-    title: "CRM & Workflow",
-    desc: "Custom n8n and Make pipelines that stitch your stack into one nervous system, with audit trails and rollbacks.",
-    chips: ["n8n", "Make", "Zapier", "Supabase"],
-    illustration: <NodesIllu />,
-  },
-  {
-    num: "04",
-    title: "AI Agents",
-    desc: "Bespoke agents that read inboxes, draft reports, and run research overnight while your team sleeps.",
-    chips: ["Claude", "OpenAI", "Vercel AI", "LangGraph"],
-    illustration: <OrbIllu />,
-  },
-];
-
 export default function Services() {
+  const t = useT(translations).services;
+  const services: Service[] = t.items.map((it, i) => ({ ...it, illustration: ILLUS[i] }));
   return (
     <section id="services" className="section-pad relative">
       <div className="container-x">
         <header className="mb-16 grid grid-cols-1 gap-6 md:grid-cols-[auto_1fr] md:items-end">
-          <span className="font-mono-label">( 02 — WHAT WE BUILD )</span>
+          <span className="font-mono-label">{t.eyebrow}</span>
           <SplitReveal
             as="h2"
-            text="Four systems. One operating layer."
+            text={t.title}
             className="font-display max-w-[18ch] text-[clamp(40px,6vw,96px)]"
           />
         </header>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-12 md:auto-rows-[minmax(0,1fr)]">
-          <Card service={SERVICES[0]} className="md:col-span-7" />
-          <Card service={SERVICES[1]} className="md:col-span-5" />
-          <Card service={SERVICES[2]} className="md:col-span-5" />
-          <Card service={SERVICES[3]} className="md:col-span-7" />
+          <Card service={services[0]} className="md:col-span-7" />
+          <Card service={services[1]} className="md:col-span-5" />
+          <Card service={services[2]} className="md:col-span-5" />
+          <Card service={services[3]} className="md:col-span-7" />
         </div>
       </div>
     </section>

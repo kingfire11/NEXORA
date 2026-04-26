@@ -3,35 +3,27 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SplitReveal from "@/components/motion/SplitReveal";
-
-const FAQ = [
-  { q: "How fast can we go live?", a: "First workflow in production within 14 days. Full system in 6 weeks." },
-  { q: "Do you replace our team?", a: "No. We replace the parts of their day that drain them. Your people get back to work that compounds." },
-  { q: "What about data privacy?", a: "Self-hosted options on AWS / GCP / your own infra. We sign NDA before the first call and DPA before any data flows." },
-  { q: "Which CRMs do you integrate with?", a: "Bitrix24, amoCRM, HubSpot, Salesforce, Pipedrive, Zoho. Anything with an API — we wire it." },
-  { q: "Can the bots speak Russian and Kazakh?", a: "Yes. Native-quality output in 40+ languages out of the box, including KZ, RU, UZ, TR, AR." },
-  { q: "What if the AI gets it wrong?", a: "Every agent has guardrails, fallbacks to humans, and full audit logs. You see every decision, every input, every output." },
-  { q: "Do we own the workflows?", a: "Yes. Code, prompts, and infra are yours from day one. No lock-in, no rev-share." },
-  { q: "What's not a good fit?", a: "Highly regulated workflows requiring deterministic output (legal contracts, medical diagnosis). We'll tell you upfront." },
-];
+import { useT } from "@/lib/i18n";
+import { translations } from "@/lib/translations";
 
 export default function Faq() {
+  const t = useT(translations).faq;
   const [open, setOpen] = useState<number | null>(0);
 
   return (
     <section id="faq" className="section-pad relative">
       <div className="container-x">
         <header className="mb-16 grid grid-cols-1 gap-6 md:grid-cols-[auto_1fr] md:items-end">
-          <span className="font-mono-label">( 07 — FREQUENTLY ASKED )</span>
+          <span className="font-mono-label">{t.eyebrow}</span>
           <SplitReveal
             as="h2"
-            text="Quick answers."
+            text={t.title}
             className="font-display max-w-[18ch] text-[clamp(40px,6vw,96px)]"
           />
         </header>
 
         <ul className="border-t border-[var(--border-subtle)]">
-          {FAQ.map((item, i) => {
+          {t.items.map((item, i) => {
             const isOpen = open === i;
             return (
               <li key={i} className="border-b border-[var(--border-subtle)]">

@@ -3,55 +3,32 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import SplitReveal from "@/components/motion/SplitReveal";
+import { useT } from "@/lib/i18n";
+import { translations } from "@/lib/translations";
 
-const CASES = [
-  {
-    slug: "telco-operator",
-    num: "01",
-    client: "Telco Operator",
-    category: "Support automation",
-    metric: "−87%",
-    metricLabel: "response time",
-    desc: "24/7 multilingual WhatsApp agent answering 14 000 tickets/month with 92% CSAT.",
-    palette: ["#6E3AFF", "#00F0FF"],
-  },
-  {
-    slug: "b2b-saas",
-    num: "02",
-    client: "B2B SaaS",
-    category: "Sales pipeline",
-    metric: "+312%",
-    metricLabel: "qualified leads",
-    desc: "AI-SDR sequences across LinkedIn + email, fully integrated with HubSpot.",
-    palette: ["#00F0FF", "#6E3AFF"],
-  },
-  {
-    slug: "fnb-chain",
-    num: "03",
-    client: "F&B Chain",
-    category: "Internal ops",
-    metric: "12 000h",
-    metricLabel: "saved per year",
-    desc: "n8n workflows replaced 4 manual reporting roles across 23 venues.",
-    palette: ["#FFB547", "#6E3AFF"],
-  },
+const PALETTES: [string, string][] = [
+  ["#6E3AFF", "#00F0FF"],
+  ["#00F0FF", "#6E3AFF"],
+  ["#FFB547", "#6E3AFF"],
 ];
 
 export default function Cases() {
+  const t = useT(translations).cases;
+  const cases = t.items.map((c, i) => ({ ...c, palette: PALETTES[i] ?? PALETTES[0] }));
   return (
     <section id="work" className="section-pad relative">
       <div className="container-x">
         <header className="mb-16 grid grid-cols-1 gap-6 md:grid-cols-[auto_1fr] md:items-end">
-          <span className="font-mono-label">( 04 — SELECTED WORK )</span>
+          <span className="font-mono-label">{t.eyebrow}</span>
           <SplitReveal
             as="h2"
-            text="Numbers do the talking."
+            text={t.title}
             className="font-display max-w-[18ch] text-[clamp(40px,6vw,96px)]"
           />
         </header>
 
         <ul className="grid grid-cols-1 gap-5 md:grid-cols-3">
-          {CASES.map((c) => (
+          {cases.map((c) => (
             <motion.li
               key={c.slug}
               initial={{ opacity: 0, y: 36 }}
@@ -89,7 +66,7 @@ export default function Cases() {
                     {c.desc}
                   </p>
                   <div className="mt-5 flex items-center justify-between">
-                    <span className="font-mono-label">READ CASE</span>
+                    <span className="font-mono-label">{t.read}</span>
                     <span aria-hidden className="text-lg transition-transform duration-500 group-hover:translate-x-1">→</span>
                   </div>
                 </div>

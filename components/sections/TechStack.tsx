@@ -2,6 +2,8 @@
 
 import Marquee from "@/components/motion/Marquee";
 import SplitReveal from "@/components/motion/SplitReveal";
+import { useT } from "@/lib/i18n";
+import { translations } from "@/lib/translations";
 
 const ROW_A = ["CLAUDE","OPENAI","GEMINI","VERCEL","SUPABASE","POSTGRES","N8N","MAKE","ZAPIER"];
 const ROW_B = ["BITRIX24","AMOCRM","HUBSPOT","TWILIO","WHATSAPP","TELEGRAM","SLACK","NOTION","LINEAR"];
@@ -18,14 +20,15 @@ function Item({ label }: { label: string }) {
 }
 
 export default function TechStack() {
+  const t = useT(translations).stack;
   return (
     <section className="section-pad relative">
       <div className="container-x">
         <header className="mb-16 grid grid-cols-1 gap-6 md:grid-cols-[auto_1fr] md:items-end">
-          <span className="font-mono-label">( 05 — OUR STACK )</span>
+          <span className="font-mono-label">{t.eyebrow}</span>
           <SplitReveal
             as="h2"
-            text="Built on the tools you already trust."
+            text={t.title}
             className="font-display max-w-[20ch] text-[clamp(40px,6vw,96px)]"
           />
         </header>

@@ -2,16 +2,12 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
-const links = [
-  { label: "Services", href: "#services" },
-  { label: "Process", href: "#process" },
-  { label: "Work", href: "#work" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "FAQ", href: "#faq" },
-];
+import { useT } from "@/lib/i18n";
+import { translations } from "@/lib/translations";
+import LangToggle from "./LangToggle";
 
 export default function Nav() {
+  const t = useT(translations);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -37,11 +33,11 @@ export default function Nav() {
           <Link href="/" data-cursor="HOME" className="flex items-center gap-3">
             <span className="font-display text-[22px] tracking-tight">NEXORA</span>
           </Link>
-          <span className="hidden md:inline font-mono-label">[ AI · Automation · 2026 ]</span>
+          <span className="hidden md:inline font-mono-label">{t.nav.label}</span>
         </div>
 
         <nav className="hidden lg:flex items-center gap-1">
-          {links.map((l) => (
+          {t.nav.links.map((l) => (
             <a
               key={l.href}
               href={l.href}
@@ -55,17 +51,18 @@ export default function Nav() {
         </nav>
 
         <div className="flex items-center gap-3">
+          <LangToggle />
           <a
             href="#cta"
             data-cursor="BOOK"
             className="hidden md:inline-flex items-center gap-2 rounded-full border border-[var(--border-strong)] bg-white/[0.02] px-4 py-2 text-[13px] font-medium tracking-[0.04em] transition-all hover:border-[var(--accent-cyan)] hover:bg-[rgba(0,240,255,0.04)]"
           >
-            Book intro call
+            {t.nav.cta}
             <span aria-hidden>→</span>
           </a>
           <button
             onClick={() => setOpen((v) => !v)}
-            aria-label="Menu"
+            aria-label={t.nav.menu}
             data-cursor="MENU"
             className="lg:hidden flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border-strong)]"
           >
@@ -77,7 +74,7 @@ export default function Nav() {
       {open && (
         <div className="lg:hidden border-t border-[var(--border-subtle)] bg-[var(--bg-base)]">
           <div className="flex flex-col gap-1 px-[clamp(20px,5vw,80px)] py-6">
-            {links.map((l) => (
+            {t.nav.links.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
@@ -92,7 +89,7 @@ export default function Nav() {
               onClick={() => setOpen(false)}
               className="mt-4 inline-flex items-center justify-center rounded-full bg-gradient-to-br from-[var(--accent-violet)] to-[var(--accent-cyan)] px-5 py-3 text-sm font-semibold text-black"
             >
-              Book intro call →
+              {t.nav.cta} →
             </a>
           </div>
         </div>

@@ -1,6 +1,8 @@
 "use client";
 
 import Marquee from "@/components/motion/Marquee";
+import { useT } from "@/lib/i18n";
+import { translations } from "@/lib/translations";
 
 const COMPANIES = [
   "KASPI", "CHOCOFAMILY", "KOLESA", "AIRBA", "JUSAN", "FORTE",
@@ -8,11 +10,12 @@ const COMPANIES = [
 ];
 
 export default function TrustBar() {
+  const t = useT(translations).trust;
   return (
     <section className="relative border-y border-[var(--border-subtle)] bg-[var(--bg-base)] py-10">
       <div className="container-x grid grid-cols-1 items-center gap-6 px-[clamp(20px,5vw,80px)] md:grid-cols-[auto_1fr]">
         <span className="font-mono-label whitespace-nowrap pr-6 md:border-r md:border-[var(--border-subtle)]">
-          TRUSTED BY OPERATORS AT —
+          {t.label}
         </span>
         <Marquee
           duration={70}
